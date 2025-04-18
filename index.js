@@ -1,7 +1,7 @@
 const express = require('express')
 const app = express()
 app.get('/', function (req, res) {
-  res.send(`<center><p class="nome">music bot 🟢online</p><br><img src="https://cdn.discordapp.com/icons/816316117701885962/278233ccafd8b231de4c221783c27c6a.png?size=2048"style="border-radius: 50%;max-height: 100px;border-width: medium;
+  res.send(`<center><p class="name">music bot 🟢online</p><br><img src="https://cdn.discordapp.com/icons/816316117701885962/278233ccafd8b231de4c221783c27c6a.png?size=2048"style="border-radius: 50%;max-height: 100px;border-width: medium;
 border-style: solid;
 border-color: #F00;border-top-color: #54ff00;border-right-color: #54ff00;
 }"></center>
@@ -10,7 +10,7 @@ border-color: #F00;border-top-color: #54ff00;border-right-color: #54ff00;
     color: #54ff00;
     max-height: 50px;
   }
-.nome {
+.name {
     color: #fff;
     max-height: 50px;
   }
@@ -33,7 +33,7 @@ const bot = new Aoijs.Bot({
 	prefix: ['$getServerVar[prefix]', 'b1']
 });
 
-//canal warn
+// Warning channel
 
 bot.onMessage({
 	guildOnly: true
@@ -42,15 +42,15 @@ bot.onMessage({
 
 const fs = require('fs');
 
-const folders = fs.readdirSync('./comandos/');
+const folders = fs.readdirSync('./commands/');
 
 for (const files of folders) {
 	const folder = fs
-		.readdirSync(`./comandos/${files}/`)
+		.readdirSync(`./commands/${files}/`)
 		.filter(file => file.endsWith('.js'));
 
 	for (const commands of folder) {
-		const command = require(`./comandos/${files}/${commands}`);
+		const command = require(`./commands/${files}/${commands}`);
 		bot.command({
 			name: command.name,
 			aliases: command.aliases,
@@ -63,19 +63,18 @@ for (const files of folders) {
 
 
 
-
-// variaveis
+// Variables
 bot.variables({
 			prefix: '!!',
       id: ''
 })
 
     bot.command({
-	name: '<@!820441070412365825>',//id do seu bot!!!
-	code: `$title[meu nome e $username[$clientID]]
-$description[meu prefixo e \`$getServerVar[prefix]\`
-o meu criador e o <@!$botOwnerID>]
-$footer[$getServerVar[prefix]help para ver minha lista de comandos]
+	name: '<@!1362611907349184572>', // Your bot's ID!!!
+	code: `$title[My name is $username[$clientID]]
+$description[My prefix is \`$getServerVar[prefix]\`
+My creator is <@!$botOwnerID>]
+$footer[$getServerVar[prefix]help to see my list of commands]
 $color[RANDOM]
 	`,
 	nonPrefixed: true
@@ -85,7 +84,7 @@ bot.readyCommand({
   channel: "824266947054927924",
     code: `
 $log[]
-$log[criado por appmakerparana]
+$log[Created by appmakerparana]
     `
 })
 
@@ -94,34 +93,34 @@ bot.status({
   type: "PLAYING",
   time: 5
 })
-//eventos
+// Events
 bot.musicStartCommand({
 	channel: '$channelID',
 	code: `
- $author[tocando agora;https://cdn.discordapp.com/attachments/812081910532538419/812082048432341052/cd.gif]
+ $author[Playing now;https://cdn.discordapp.com/attachments/812081910532538419/812082048432341052/cd.gif]
 $color[RANDOM]
 $thumbnail[$songInfo[thumbnail]]
-$addField[Duração;\`$songInfo[duration]\`;yes]
-$addField[infos;[link da musica]($songInfo[url])
-**artista**
+$addField[Duration;\`$songInfo[duration]\`;yes]
+$addField[Info;[Music link]($songInfo[url])
+**Artist**
 [$songInfo[publisher]]($songInfo[publisher_url]);yes]
-$addField[titulo;\`$songInfo[title]\`;yes]
+$addField[Title;\`$songInfo[title]\`;yes]
 `
 });
 
 bot.musicEndCommand({
 	channel: '$channelID',
 	code: `
-  $description[musica acabou]
-  $footer[saindo da call;https://cdn.discordapp.com/attachments/812081910532538419/812082048432341052/cd.gif]
+  $description[Music has ended]
+  $footer[Leaving the call;https://cdn.discordapp.com/attachments/812081910532538419/812082048432341052/cd.gif]
   $color[RANDOM]
   `
 })
 
 bot.command({
-	name: 'setprefixo',
-	code: `$setServerVar[prefix;$message] $description[o novo prefixo do server e  \`$message\`]
-  $onlyPerms[admin; <@$authorID> \`verificamos que voce não tem permissao de adm\`]
-  $argsCheck[1;informe um argumento valido]
+	name: 'setprefix',
+	code: `$setServerVar[prefix;$message] $description[The new server prefix is \`$message\`]
+  $onlyPerms[admin; <@$authorID> \`You do not have admin permissions\`]
+  $argsCheck[1;Please provide a valid argument]
   `
 });
